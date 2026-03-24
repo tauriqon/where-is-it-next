@@ -1,3 +1,4 @@
+import Link from "next/link"
 import { ROOMS } from "@/data/rooms"
 
 export default function HomePage() {
@@ -16,20 +17,19 @@ export default function HomePage() {
           <h2 className="text-lg font-semibold text-gray-900">
             Room
           </h2>
-        <div className="mt-3 space-y-3">
+
+          <div className="mt-3 space-y-3">
             {ROOMS.map((room) => (
-              <div
-                key={room.id}
-                className="rounded-2xl border border-gray-200 p-4"
-              >
-                <p className="text-base font-medium text-gray-800">
-                  {room.emoji} {room.name}
-                </p>
-              </div>
+              <Link key={room.id} href={`/room/${room.id}`}>
+                <div className="rounded-2xl border border-gray-200 p-4">
+                  <p className="text-base font-medium text-gray-800">
+                    {room.emoji} {room.name}
+                  </p>
+                </div>
+              </Link>
             ))}
           </div>
         </section>
-
       </div>
     </main>
   )
