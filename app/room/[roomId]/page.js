@@ -1,3 +1,4 @@
+import Link from "next/link"
 import { ROOMS } from "@/data/rooms"
 import { STORAGES } from "@/data/storages"
 
@@ -24,12 +25,16 @@ export default async function StoragePage({ params }) {
 
       <div className="mt-6 space-y-3">
         {storages.map((storage) => (
-          <div
+          <Link
             key={storage.id}
-            className="rounded-2xl border p-4"
+            href={`/room/${roomId}/storage/${storage.id}`}
           >
-            {storage.name}
-          </div>
+            <div
+              className="rounded-2xl border p-4 cursor-pointer hover:bg-gray-50"
+            >
+              {storage.name}
+            </div>
+          </Link>
         ))}
       </div>
     </main>
