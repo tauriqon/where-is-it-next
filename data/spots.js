@@ -1,0 +1,10 @@
+export const SPOTS = [
+  { id: 1, storageId: 1, name: "왼쪽 서랍" },
+  { id: 2, storageId: 1, name: "오른쪽 서랍" },
+
+  { id: 3, storageId: 2, name: "맨 위 칸" },
+  { id: 4, storageId: 2, name: "맨 아래 칸" },
+
+  { id: 5, storageId: 3, name: "위칸" },
+  { id: 6, storageId: 3, name: "아래칸" },
+]
