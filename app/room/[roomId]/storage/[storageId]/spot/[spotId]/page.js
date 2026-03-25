@@ -44,7 +44,10 @@ export default async function ItemPage({ params }) {
         title={currentSpot.name}
       />
 
-      <ItemSection initialItems={items} />
+      <ItemSection
+        initialItems={items}
+        spotId={spotId}
+      />
     </AppLayout>
   )
 }
