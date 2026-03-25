@@ -23,6 +23,10 @@ export default function ItemSection({ initialItems }) {
     setNewItemName("")
   }
 
+  function handleDeleteItem(itemId) {
+    setItems((prev) => prev.filter((item) => item.id != itemId))
+  }
+
   return (
     <section className="mt-6">
       <div className="flex gap-2">
@@ -50,7 +54,16 @@ export default function ItemSection({ initialItems }) {
         ) : (
           items.map((item) => (
             <Card key={item.id}>
-              {item.name}
+              <div className="flex items-center justify-between gap-3">
+                <span>{item.name}</span>
+
+                <button
+                  onClick={() => handleDeleteItem(item.id)}
+                  className="rounded-xl border px-3 py-1 text-sm hover:bg-gray-50"
+                >
+                  삭제
+                </button>
+              </div>
             </Card>
           ))
         )}
