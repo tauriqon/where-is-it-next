@@ -4,6 +4,7 @@ import { STORAGES } from "@/data/storages"
 import { SPOTS } from "@/data/spots"
 import Card from "@/components/Card"
 import PageHeader from "@/components/PageHeader"
+import Link from "next/link"
 
 export default async function SpotPage({ params }) {
   const { roomId, storageId } = await params
@@ -37,9 +38,14 @@ export default async function SpotPage({ params }) {
 
       <div className="mt-6 space-y-3">
         {spots.map((spot) => (
-          <Card key={spot.id}>
-            {spot.name}
-          </Card>
+          <Link
+            key={spot.id}
+            href={`/room/${roomId}/storage/${storageId}/spot/${spot.id}`}
+          >
+            <Card clickable>
+              {spot.name}
+            </Card>
+          </Link>
         ))}
       </div>
     </AppLayout>
