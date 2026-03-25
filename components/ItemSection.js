@@ -1,38 +1,23 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useState } from "react"
+import useLocalStorage from "@/hooks/useLocalStorage"
 import ItemInput from "@/components/ItemInput"
 import ItemList from "@/components/ItemList"
 
 export default function ItemSection({ initialItems, spotId }) {
   const storageKey = `items-${spotId}`
 
-  const [items, setItems] = useState(initialItems)
+  const [items, setItems, isHydrated] = useLocalStorage(
+    storageKey,
+    initialItems
+  )
+
   const [newItemName, setNewItemName] = useState("")
-  const [isHydrated, setIsHydrated] = useState(false)
   const [editingItemId, setEditingItemId] = useState(null)
-
-  useEffect(() => {
-    const savedItems = localStorage.getItem(storageKey)
-
-    if (savedItems) {
-      setItems(JSON.parse(savedItems))
-    } else {
-      setItems(initialItems)
-    }
-
-    setIsHydrated(true)
-  }, [storageKey, initialItems])
-
-  useEffect(() => {
-    if (!isHydrated) return
-
-    localStorage.setItem(storageKey, JSON.stringify(items))
-  }, [items, storageKey, isHydrated])
 
   function handleAddOrUpdateItem() {
     const trimmedName = newItemName.trim()
-
     if (!trimmedName) return
 
     if (editingItemId) {
