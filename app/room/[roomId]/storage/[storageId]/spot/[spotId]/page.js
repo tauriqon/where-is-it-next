@@ -3,6 +3,8 @@ import PageHeader from "@/components/PageHeader"
 import { ROOMS } from "@/data/rooms"
 import { STORAGES } from "@/data/storages"
 import { SPOTS } from "@/data/spots"
+import { ITEMS } from "@/data/items"
+import Card from "@/components/Card"
 
 export default async function ItemPage({ params }) {
   const { roomId, storageId, spotId } = await params
@@ -31,6 +33,10 @@ export default async function ItemPage({ params }) {
     return <div>존재하지 않는 Spot입니다</div>
   }
 
+  const items = ITEMS.filter(
+    (item) => item.spotId === Number(spotId)
+  )
+
   return (
     <AppLayout>
       <PageHeader
@@ -38,8 +44,12 @@ export default async function ItemPage({ params }) {
         title={currentSpot.name}
       />
 
-      <div className="mt-6 rounded-2xl border p-4">
-        여기는 Item 페이지야
+      <div className="mt-6 space-y-3">
+        {items.map((item) => (
+          <Card key={item.id}>
+            {item.name}
+          </Card>
+        ))}
       </div>
     </AppLayout>
   )
