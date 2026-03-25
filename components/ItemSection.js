@@ -9,6 +9,7 @@ export default function ItemSection({ initialItems, spotId }) {
   const [items, setItems] = useState(initialItems)
   const [newItemName, setNewItemName] = useState("")
   const [isHydrated, setIsHydrated] = useState(false)
+  const [editingItemId, setEditingItemId] = useState(null)
 
   useEffect(() => {
     const savedItems = localStorage.getItem(storageKey)
@@ -28,22 +29,49 @@ export default function ItemSection({ initialItems, spotId }) {
     localStorage.setItem(storageKey, JSON.stringify(items))
   }, [items, storageKey, isHydrated])
 
-  function handleAddItem() {
+  function handleAddOrUpdateItem() {
     const trimmedName = newItemName.trim()
 
     if (!trimmedName) return
 
-    const newItem = {
-      id: Date.now(),
-      name: trimmedName,
+    if (editingItemId) {
+      setItems((prev) =>
+        prev.map((item) =>
+          item.id === editingItemId
+            ? { ...item, name: trimmedName }
+            : item
+        )
+      )
+      setEditingItemId(null)
+    } else {
+      const newItem = {
+        id: Date.now(),
+        name: trimmedName,
+      }
+
+      setItems((prev) => [...prev, newItem])
     }
 
-    setItems((prev) => [...prev, newItem])
     setNewItemName("")
   }
 
   function handleDeleteItem(itemId) {
     setItems((prev) => prev.filter((item) => item.id !== itemId))
+
+    if (editingItemId === itemId) {
+      setEditingItemId(null)
+      setNewItemName("")
+    }
+  }
+
+  function handleEditItem(item) {
+    setEditingItemId(item.id)
+    setNewItemName(item.name)
+  }
+
+  function handleCancelEdit() {
+    setEditingItemId(null)
+    setNewItemName("")
   }
 
   return (
@@ -59,12 +87,21 @@ export default function ItemSection({ initialItems, spotId }) {
         />
 
         <button
-          onClick={handleAddItem}
+          onClick={handleAddOrUpdateItem}
           className="rounded-2xl border px-4 py-3 font-medium hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-white"
           disabled={!isHydrated || !newItemName.trim()}
         >
-          Add
+          {editingItemId ? "저장" : "Add"}
         </button>
+
+        {editingItemId && (
+          <button
+            onClick={handleCancelEdit}
+            className="rounded-2xl border px-4 py-3 font-medium hover:bg-gray-50"
+          >
+            취소
+          </button>
+        )}
       </div>
 
       <div className="mt-4 space-y-3">
@@ -82,12 +119,21 @@ export default function ItemSection({ initialItems, spotId }) {
               <div className="flex items-center justify-between gap-3">
                 <span>{item.name}</span>
 
-                <button
-                  onClick={() => handleDeleteItem(item.id)}
-                  className="rounded-xl border px-3 py-1 text-sm hover:bg-gray-50"
-                >
-                  삭제
-                </button>
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => handleEditItem(item)}
+                    className="rounded-xl border px-3 py-1 text-sm hover:bg-gray-50"
+                  >
+                    수정
+                  </button>
+
+                  <button
+                    onClick={() => handleDeleteItem(item.id)}
+                    className="rounded-xl border px-3 py-1 text-sm hover:bg-gray-50"
+                  >
+                    삭제
+                  </button>
+                </div>
               </div>
             </Card>
           ))
