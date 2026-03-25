@@ -1,10 +1,10 @@
 import AppLayout from "@/components/AppLayout"
 import PageHeader from "@/components/PageHeader"
+import ItemSection from "@/components/ItemSection"
 import { ROOMS } from "@/data/rooms"
 import { STORAGES } from "@/data/storages"
 import { SPOTS } from "@/data/spots"
 import { ITEMS } from "@/data/items"
-import Card from "@/components/Card"
 
 export default async function ItemPage({ params }) {
   const { roomId, storageId, spotId } = await params
@@ -44,13 +44,7 @@ export default async function ItemPage({ params }) {
         title={currentSpot.name}
       />
 
-      <div className="mt-6 space-y-3">
-        {items.map((item) => (
-          <Card key={item.id}>
-            {item.name}
-          </Card>
-        ))}
-      </div>
+      <ItemSection initialItems={items} />
     </AppLayout>
   )
 }
