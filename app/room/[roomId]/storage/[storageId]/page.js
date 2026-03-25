@@ -34,6 +34,7 @@ export default async function SpotPage({ params }) {
       <PageHeader
         subtitle={`${currentRoom.emoji} ${currentRoom.name}`}
         title={currentStorage.name}
+        showBack
       />
 
       <div className="mt-6 space-y-3">

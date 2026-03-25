@@ -42,6 +42,7 @@ export default async function ItemPage({ params }) {
       <PageHeader
         subtitle={`${currentRoom.emoji} ${currentRoom.name} / ${currentStorage.name}`}
         title={currentSpot.name}
+        showBack
       />
 
       <ItemSection

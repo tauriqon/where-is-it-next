@@ -24,6 +24,7 @@ export default async function StoragePage({ params }) {
     <AppLayout>
       <PageHeader
         title={`${currentRoom.emoji} ${currentRoom.name}`}
+        showBack
       />
 
       <div className="mt-6 space-y-3">
