@@ -1,11 +1,13 @@
 import Link from "next/link"
+import AppLayout from "@/components/AppLayout"
 import { ROOMS } from "@/data/rooms"
+import Card from "@/components/Card"
 
 export default function HomePage() {
   return (
-    <main className="min-h-screen bg-white p-6">
+    <AppLayout>
       <div className="mx-auto max-w-md">
-        <h1 className="text-3xl font-bold text-gray-900">
+        <h1 className="text-xl font-bold text-gray-900">
           where-is-it
         </h1>
 
@@ -18,19 +20,19 @@ export default function HomePage() {
             Room
           </h2>
 
-          <div className="mt-3 space-y-3">
+          <div className="mt-6 space-y-3">
             {ROOMS.map((room) => (
               <Link key={room.id} href={`/room/${room.id}`}>
-                <div className="rounded-2xl border border-gray-200 p-4">
+                <Card clickable>
                   <p className="text-base font-medium text-gray-800">
                     {room.emoji} {room.name}
                   </p>
-                </div>
+                </Card>
               </Link>
             ))}
           </div>
         </section>
       </div>
-    </main>
+    </AppLayout>
   )
 }

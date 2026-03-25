@@ -1,6 +1,9 @@
+import AppLayout from "@/components/AppLayout"
 import { ROOMS } from "@/data/rooms"
 import { STORAGES } from "@/data/storages"
 import { SPOTS } from "@/data/spots"
+import Card from "@/components/Card"
+import PageHeader from "@/components/PageHeader"
 
 export default async function SpotPage({ params }) {
   const { roomId, storageId } = await params
@@ -26,25 +29,19 @@ export default async function SpotPage({ params }) {
   )
 
   return (
-    <main className="min-h-screen p-6">
-      <p className="text-sm text-gray-500">
-        {currentRoom.emoji} {currentRoom.name}
-      </p>
-
-      <h1 className="mt-2 text-xl font-bold">
-        {currentStorage.name}
-      </h1>
+    <AppLayout>
+      <PageHeader
+        subtitle={`${currentRoom.emoji} ${currentRoom.name}`}
+        title={currentStorage.name}
+      />
 
       <div className="mt-6 space-y-3">
         {spots.map((spot) => (
-          <div
-            key={spot.id}
-            className="rounded-2xl border p-4"
-          >
+          <Card key={spot.id}>
             {spot.name}
-          </div>
+          </Card>
         ))}
       </div>
-    </main>
+    </AppLayout>
   )
 }

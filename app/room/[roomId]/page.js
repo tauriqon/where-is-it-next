@@ -1,6 +1,9 @@
 import Link from "next/link"
+import AppLayout from "@/components/AppLayout"
 import { ROOMS } from "@/data/rooms"
 import { STORAGES } from "@/data/storages"
+import Card from "@/components/Card"
+import PageHeader from "@/components/PageHeader"
 
 export default async function StoragePage({ params }) {
   const { roomId } = await params
@@ -18,10 +21,10 @@ export default async function StoragePage({ params }) {
   )
 
   return (
-    <main className="min-h-screen p-6">
-      <h1 className="text-xl font-bold">
-        {currentRoom.emoji} {currentRoom.name}
-      </h1>
+    <AppLayout>
+      <PageHeader
+        title={`${currentRoom.emoji} ${currentRoom.name}`}
+      />
 
       <div className="mt-6 space-y-3">
         {storages.map((storage) => (
@@ -29,14 +32,12 @@ export default async function StoragePage({ params }) {
             key={storage.id}
             href={`/room/${roomId}/storage/${storage.id}`}
           >
-            <div
-              className="rounded-2xl border p-4 cursor-pointer hover:bg-gray-50"
-            >
+            <Card clickable>
               {storage.name}
-            </div>
+            </Card>
           </Link>
         ))}
       </div>
-    </main>
+    </AppLayout>
   )
 }

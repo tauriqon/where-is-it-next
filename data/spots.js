@@ -7,4 +7,6 @@ export const SPOTS = [
 
   { id: 5, storageId: 3, name: "위칸" },
   { id: 6, storageId: 3, name: "아래칸" },
+
+  { id: 7, storageId: 5, name: "왼쪽 첫번째" },
 ]
