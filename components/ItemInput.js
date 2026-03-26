@@ -1,3 +1,5 @@
+import Button from "@/components/ui/Button"
+
 export default function ItemInput({
   value,
   onChange,
@@ -13,25 +15,22 @@ export default function ItemInput({
         value={value}
         onChange={onChange}
         placeholder="아이템 이름 입력"
-        className="flex-1 rounded-2xl border px-4 py-3 outline-none"
+        className="flex-1 rounded-2xl border bg-white px-4 py-3 outline-none placeholder:text-gray-400"
         disabled={disabled}
       />
 
-      <button
+      <Button
         onClick={onSubmit}
-        className="rounded-2xl border px-4 py-3 font-medium hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-white"
+        variant="primary"
         disabled={disabled || !value.trim()}
       >
         {isEditing ? "저장" : "Add"}
-      </button>
+      </Button>
 
       {isEditing && (
-        <button
-          onClick={onCancel}
-          className="rounded-2xl border px-4 py-3 font-medium hover:bg-gray-50"
-        >
+        <Button onClick={onCancel} variant="secondary">
           취소
-        </button>
+        </Button>
       )}
     </div>
   )

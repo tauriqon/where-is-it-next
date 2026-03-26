@@ -1,4 +1,7 @@
 import Card from "@/components/Card"
+import Button from "@/components/ui/Button"
+import LoadingState from "@/components/ui/LoadingState"
+import EmptyState from "@/components/ui/EmptyState"
 
 export default function ItemList({
   items,
@@ -7,22 +10,12 @@ export default function ItemList({
   onDelete,
 }) {
   if (!isHydrated) {
-    return (
-      <div className="mt-4">
-        <p className="text-center text-sm text-gray-400">
-          불러오는 중...
-        </p>
-      </div>
-    )
+    return <LoadingState message="아이템 불러오는 중..." />
   }
 
   if (items.length === 0) {
     return (
-      <div className="mt-4">
-        <p className="text-center text-sm text-gray-500">
-          아직 등록된 아이템이 없습니다
-        </p>
-      </div>
+      <EmptyState message="아직 등록된 아이템이 없습니다" />
     )
   }
 
@@ -34,19 +27,23 @@ export default function ItemList({
             <span>{item.name}</span>
 
             <div className="flex gap-2">
-              <button
+              <Button
                 onClick={() => onEdit(item)}
-                className="rounded-xl border px-3 py-1 text-sm hover:bg-gray-50"
+                variant="secondary"
+                size="sm"
+                className="px-3 py-1"
               >
                 수정
-              </button>
+              </Button>
 
-              <button
+              <Button
                 onClick={() => onDelete(item.id)}
-                className="rounded-xl border px-3 py-1 text-sm hover:bg-gray-50"
+                variant="danger"
+                size="sm"
+                className="px-3 py-1"
               >
                 삭제
-              </button>
+              </Button>
             </div>
           </div>
         </Card>
