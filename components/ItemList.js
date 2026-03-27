@@ -20,27 +20,29 @@ export default function ItemList({
   }
 
   return (
-    <div className="mt-4 space-y-3">
+    <div className="mt-4 space-y-2">
       {items.map((item) => (
         <Card key={item.id}>
           <div className="flex items-center justify-between gap-3">
-            <span>{item.name}</span>
+            <span className="text-gray-900">
+              {item.name}
+            </span>
 
             <div className="flex gap-2">
               <Button
                 onClick={() => onEdit(item)}
-                variant="secondary"
+                variant="soft"
                 size="sm"
-                className="px-3 py-1"
+                className="px-3 py-1.5"
               >
                 수정
               </Button>
 
               <Button
                 onClick={() => onDelete(item.id)}
-                variant="danger"
+                variant="softDanger"
                 size="sm"
-                className="px-3 py-1"
+                className="px-3 py-1.5"
               >
                 삭제
               </Button>

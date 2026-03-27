@@ -1,31 +1,38 @@
 "use client"
 
 import { useRouter } from "next/navigation"
+import { ChevronLeft } from "lucide-react"
 
-export default function PageHeader({ subtitle, title, showBack = false }) {
+export default function PageHeader({
+  subtitle,
+  title,
+  showBack = false,
+}) {
   const router = useRouter()
 
   return (
-    <div>
-      {showBack && (
-        <button
-          onClick={() => router.back()}
-          className="mb-4 flex h-10 w-10 items-center justify-center rounded-full border text-lg hover:bg-gray-50"
-          aria-label="뒤로가기"
-        >
-          🔙
-        </button>
-      )}
+    <header className="mb-6">
+      <div className="flex items-center gap-1">
+        {showBack && (
+          <button
+            onClick={() => router.back()}
+            className="flex h-9 w-9 items-center justify-center rounded-full hover:bg-gray-100"
+            aria-label="뒤로가기"
+          >
+            <ChevronLeft size={22} />
+          </button>
+        )}
+
+        <h1 className="text-[22px] font-bold tracking-[-0.02em] text-gray-900">
+          {title}
+        </h1>
+      </div>
 
       {subtitle && (
-        <p className="text-sm text-gray-500">
+        <p className="mt-2 pl-10 text-sm text-gray-500">
           {subtitle}
         </p>
       )}
-
-      <h1 className="mt-2 text-xl font-bold">
-        {title}
-      </h1>
-    </div>
+    </header>
   )
 }

@@ -12,13 +12,17 @@ export default function Button({
 
   const variantClasses = {
     primary:
-      "bg-blue-500 px-4 py-3 text-white hover:bg-blue-600 disabled:hover:bg-blue-500",
+      "bg-blue-300 px-4 py-3 text-white hover:bg-blue-400 disabled:hover:bg-blue-300",
     secondary:
       "border bg-white px-4 py-3 text-gray-900 hover:bg-gray-50 disabled:hover:bg-white",
     danger:
       "border bg-white px-4 py-3 text-red-500 hover:bg-red-50 disabled:hover:bg-white",
     ghost:
       "bg-transparent text-gray-700 hover:bg-gray-100",
+    soft:
+      "bg-gray-100 px-4 py-3 text-gray-700 hover:bg-gray-200",
+    softDanger:
+      "bg-red-50 px-4 py-3 text-red-500 hover:bg-red-100",
   }
 
   const sizeClasses = {
