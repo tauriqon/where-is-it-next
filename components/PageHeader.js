@@ -23,13 +23,13 @@ export default function PageHeader({
           </button>
         )}
 
-        <h1 className="text-[22px] font-bold tracking-[-0.02em] text-gray-900">
+        <h1 className="mt-1 text-sl font-semibold text-gray-900 leading-snug">
           {title}
         </h1>
       </div>
 
       {subtitle && (
-        <p className="mt-2 pl-10 text-sm text-gray-500">
+        <p className="mt-2 pl-10 text-sm font-semibold text-gray-600">
           {subtitle}
         </p>
       )}

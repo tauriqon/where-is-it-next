@@ -23,19 +23,19 @@ export default function ItemList({
     <div className="mt-4 space-y-3">
       {items.map((item) => (
         <Card key={item.id} className="p-4">
-          <div className="flex items-center gap-3">
+          <div className="flex items-center justify-between gap-3">
             <div className="min-w-0 flex-1">
-              <p className="truncate text-[15px] font-medium text-gray-900">
+              <p className="truncate text-base font-semibold text-gray-900">
                 {item.name}
               </p>
             </div>
 
-            <div className="flex shrink-0 items-center gap-2">
+            <div className="flex shrink-0 items-center gap-1.5">
               <Button
                 onClick={() => onEdit(item)}
                 variant="soft"
                 size="sm"
-                className="min-w-[52px] px-3 py-1.5"
+                className="min-w-[44px] rounded-xl px-2.5 py-1 text-xs text-gray-500"
               >
                 수정
               </Button>
@@ -44,7 +44,7 @@ export default function ItemList({
                 onClick={() => onDelete(item.id)}
                 variant="softDanger"
                 size="sm"
-                className="min-w-[52px] px-3 py-1.5"
+                className="min-w-[44px] rounded-xl px-2.5 py-1 text-xs text-red-400"
               >
                 삭제
               </Button>
