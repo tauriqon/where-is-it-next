@@ -1,5 +1,7 @@
+"use client"
+
+import { useEffect, useRef, useState } from "react"
 import Card from "@/components/Card"
-import Button from "@/components/ui/Button"
 import LoadingState from "@/components/ui/LoadingState"
 import EmptyState from "@/components/ui/EmptyState"
 
@@ -9,49 +11,111 @@ export default function ItemList({
   onEdit,
   onDelete,
 }) {
+  const [openMenuId, setOpenMenuId] = useState(null)
+
+  const buttonRefs = useRef({})
+  const menuRefs = useRef({})
+
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (openMenuId === null) return
+
+      const currentButton = buttonRefs.current[openMenuId]
+      const currentMenu = menuRefs.current[openMenuId]
+
+      const clickedInsideButton =
+        currentButton && currentButton.contains(event.target)
+
+      const clickedInsideMenu =
+        currentMenu && currentMenu.contains(event.target)
+
+      if (!clickedInsideButton && !clickedInsideMenu) {
+        setOpenMenuId(null)
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside)
+    document.addEventListener("touchstart", handleClickOutside)
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside)
+      document.removeEventListener("touchstart", handleClickOutside)
+    }
+  }, [openMenuId])
+
   if (!isHydrated) {
     return <LoadingState message="아이템 불러오는 중..." />
   }
 
   if (items.length === 0) {
     return (
-      <EmptyState message="아직 등록된 아이템이 없습니다" />
+      <EmptyState
+        message="아직 등록된 아이템이 없어요"
+        description="위에서 첫 아이템을 추가해보세요"
+      />
     )
   }
 
   return (
     <div className="mt-4 space-y-3">
-      {items.map((item) => (
-        <Card key={item.id} className="p-4">
-          <div className="flex items-center justify-between gap-3">
-            <div className="min-w-0 flex-1">
+      {items.map((item) => {
+        const isOpen = openMenuId === item.id
+
+        return (
+          <Card
+            key={item.id}
+            className="relative transition-transform duration-150 active:scale-[0.99]"
+          >
+            <div className="flex items-center justify-between">
               <p className="truncate text-base font-semibold text-gray-900">
                 {item.name}
               </p>
+
+              <button
+                ref={(el) => {
+                  buttonRefs.current[item.id] = el
+                }}
+                onClick={() => setOpenMenuId(isOpen ? null : item.id)}
+                className="rounded-xl px-3 py-2 text-lg text-gray-400 transition hover:bg-gray-100 active:scale-95 active:bg-gray-200"
+                aria-label="아이템 메뉴 열기"
+              >
+                ⋯
+              </button>
             </div>
 
-            <div className="flex shrink-0 items-center gap-1.5">
-              <Button
-                onClick={() => onEdit(item)}
-                variant="soft"
-                size="sm"
-                className="min-w-[44px] rounded-xl px-2.5 py-1 text-xs text-gray-500"
+            <div
+              ref={(el) => {
+                menuRefs.current[item.id] = el
+              }}
+              className={`absolute right-4 top-12 z-10 w-24 overflow-hidden rounded-xl border border-gray-100 bg-white shadow-md transition-all duration-250 ease-out ${
+                isOpen
+                  ? "pointer-events-auto translate-y-0 scale-100 opacity-100"
+                  : "pointer-events-none translate-y-2 scale-90 opacity-0"
+              }`}
+            >
+              <button
+                onClick={() => {
+                  onEdit(item)
+                  setOpenMenuId(null)
+                }}
+                className="w-full px-3 py-2.5 text-center text-sm transition-colors hover:bg-gray-50 active:bg-gray-100"
               >
                 수정
-              </Button>
+              </button>
 
-              <Button
-                onClick={() => onDelete(item.id)}
-                variant="softDanger"
-                size="sm"
-                className="min-w-[44px] rounded-xl px-2.5 py-1 text-xs text-red-400"
+              <button
+                onClick={() => {
+                  onDelete(item.id)
+                  setOpenMenuId(null)
+                }}
+                className="w-full px-3 py-2.5 text-center text-sm text-red-500 transition-colors hover:bg-gray-50 active:bg-red-50"
               >
                 삭제
-              </Button>
+              </button>
             </div>
-          </div>
-        </Card>
-      ))}
+          </Card>
+        )
+      })}
     </div>
   )
 }
