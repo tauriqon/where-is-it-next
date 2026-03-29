@@ -40,8 +40,8 @@ export default async function ItemPage({ params }) {
   return (
     <AppLayout>
       <PageHeader
-        subtitle={`${currentRoom.emoji} ${currentRoom.name} / ${currentStorage.name}`}
-        title={currentSpot.name}
+        title={`${currentRoom.emoji} ${currentRoom.name} > ${currentStorage.name} > ${currentSpot.name}`}
+        subtitle="아이템"
         showBack
       />
 

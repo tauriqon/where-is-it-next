@@ -62,6 +62,10 @@ export default function ItemSection({ initialItems, spotId }) {
 
   return (
     <section className="mt-6">
+      <p className="mb-3 text-sm font-semibold text-gray-500">
+        {editingItemId ? "아이템 수정" : "새 아이템 추가"}
+      </p>
+
       <ItemInput
         value={newItemName}
         onChange={(e) => setNewItemName(e.target.value)}
@@ -71,12 +75,14 @@ export default function ItemSection({ initialItems, spotId }) {
         isEditing={!!editingItemId}
       />
 
-      <ItemList
-        items={items}
-        isHydrated={isHydrated}
-        onEdit={handleEditItem}
-        onDelete={handleDeleteItem}
-      />
+      <div className="mt-6">
+        <ItemList
+          items={items}
+          isHydrated={isHydrated}
+          onEdit={handleEditItem}
+          onDelete={handleDeleteItem}
+        />
+      </div>
     </section>
   )
 }

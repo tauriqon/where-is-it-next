@@ -12,7 +12,7 @@ export default async function StoragePage({ params }) {
     (r) => r.id === Number(roomId)
   )
 
-  if(!currentRoom) {
+  if (!currentRoom) {
     return <div>존재하지 않는 Room입니다</div>
   }
 
@@ -27,18 +27,26 @@ export default async function StoragePage({ params }) {
         showBack
       />
 
-      <div className="mt-6 space-y-3">
+      <section className="mt-6 space-y-3">
         {storages.map((storage) => (
           <Link
             key={storage.id}
             href={`/room/${roomId}/storage/${storage.id}`}
           >
-            <Card clickable>
-              {storage.name}
+            <Card className="p-4">
+              <div className="flex items-center justify-between gap-3">
+                <p className="text-[15px] font-medium text-gray-900">
+                  {storage.name}
+                </p>
+
+                <span className="text-sm text-gray-400">
+                  &gt;
+                </span>
+              </div>
             </Card>
           </Link>
         ))}
-      </div>
+      </section>
     </AppLayout>
   )
 }

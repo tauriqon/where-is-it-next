@@ -15,7 +15,7 @@ export default function ItemInput({
           type="text"
           value={value}
           onChange={onChange}
-          placeholder="아이템 이름 입력"
+          placeholder="무엇을 보관하시나요?"
           className="h-12 flex-1 rounded-2xl border border-gray-200 bg-gray-50 px-4 outline-none placeholder:text-gray-400 focus:bg-white"
           disabled={disabled}
         />
@@ -33,7 +33,7 @@ export default function ItemInput({
       {isEditing && (
         <div className="mt-3 flex items-center justify-between">
           <p className="text-sm text-gray-500">
-            수정 중입니다
+            아이템 이름을 수정하고 있어요
           </p>
 
           <Button
