@@ -12,27 +12,29 @@ export default function PageHeader({
 
   return (
     <header className="mb-6">
-      <div className="flex items-center gap-1">
+      <div className="flex items-start gap-2">
         {showBack && (
           <button
             onClick={() => router.back()}
-            className="flex h-9 w-9 items-center justify-center rounded-full hover:bg-gray-100"
+            className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-gray-700 transition hover:bg-gray-100 active:scale-95"
             aria-label="뒤로가기"
           >
             <ChevronLeft size={22} />
           </button>
         )}
 
-        <h1 className="mt-1 text-sl font-semibold text-gray-900 leading-snug">
-          {title}
-        </h1>
-      </div>
+        <div className="min-w-0">
+          {subtitle && (
+            <p className="text-xs font-medium tracking-tight text-gray-500">
+              {subtitle}
+            </p>
+          )}
 
-      {subtitle && (
-        <p className="mt-2 pl-10 text-sm font-semibold text-gray-600">
-          {subtitle}
-        </p>
-      )}
+          <h1 className="mt-1 break-words text-xl font-semibold leading-snug text-gray-900">
+            {title}
+          </h1>
+        </div>
+      </div>
     </header>
   )
 }

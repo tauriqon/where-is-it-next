@@ -4,7 +4,6 @@ import ItemSection from "@/components/ItemSection"
 import { ROOMS } from "@/data/rooms"
 import { STORAGES } from "@/data/storages"
 import { SPOTS } from "@/data/spots"
-import { ITEMS } from "@/data/items"
 
 export default async function ItemPage({ params }) {
   const { roomId, storageId, spotId } = await params
@@ -33,10 +32,6 @@ export default async function ItemPage({ params }) {
     return <div>존재하지 않는 Spot입니다</div>
   }
 
-  const items = ITEMS.filter(
-    (item) => item.spotId === Number(spotId)
-  )
-
   return (
     <AppLayout>
       <PageHeader
@@ -45,10 +40,7 @@ export default async function ItemPage({ params }) {
         showBack
       />
 
-      <ItemSection
-        initialItems={items}
-        spotId={spotId}
-      />
+      <ItemSection spotId={spotId} />
     </AppLayout>
   )
 }

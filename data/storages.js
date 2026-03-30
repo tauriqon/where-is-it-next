@@ -3,7 +3,8 @@ export const STORAGES = [
   { id: 2, roomId: 1, name: "소파 옆 서랍" },
 
   { id: 3, roomId: 2, name: "옷장" },
-  { id: 4, roomId: 2, name: "침대 옆" },
+  { id: 4, roomId: 2, name: "침대 옆 서랍장" },
 
   { id: 5, roomId: 3, name: "싱크대 아래" },
+  { id: 6, roomId: 3, name: "싱크대 위" },
 ]

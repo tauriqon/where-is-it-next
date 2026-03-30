@@ -1,25 +1,27 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 
 export default function useLocalStorage(key, initialValue) {
-  const [value, setValue] = useState(initialValue)
+  const initialValueRef = useRef(initialValue)
+
+  const [value, setValue] = useState(initialValueRef.current)
   const [isHydrated, setIsHydrated] = useState(false)
 
-  // 🔹 처음 로드 시 localStorage 읽기
+  // 처음 로드 시 localStorage 읽기
   useEffect(() => {
     const saved = localStorage.getItem(key)
 
-    if (saved) {
+    if (saved !== null) {
       setValue(JSON.parse(saved))
     } else {
-      setValue(initialValue)
+      setValue(initialValueRef.current)
     }
 
     setIsHydrated(true)
-  }, [key, initialValue])
+  }, [key])
 
-  // 🔹 값 변경 시 저장
+  // 값 변경 시 저장
   useEffect(() => {
     if (!isHydrated) return
 

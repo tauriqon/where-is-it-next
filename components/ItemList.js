@@ -10,6 +10,7 @@ export default function ItemList({
   isHydrated,
   onEdit,
   onDelete,
+  deletingItemId = null,
 }) {
   const [openMenuId, setOpenMenuId] = useState(null)
 
@@ -57,14 +58,19 @@ export default function ItemList({
   }
 
   return (
-    <div className="mt-4 space-y-3">
+    <div className="mt-3 space-y-2.5">
       {items.map((item) => {
         const isOpen = openMenuId === item.id
+        const isDeleting = deletingItemId === item.id
 
         return (
           <Card
             key={item.id}
-            className="relative transition-transform duration-150 active:scale-[0.99]"
+            className={`relative transition-all duration-300 ${
+              isDeleting
+                ? "scale-90 opacity-0"
+                : "opacity-100"
+            }`}
           >
             <div className="flex items-center justify-between">
               <p className="truncate text-base font-semibold text-gray-900">
@@ -78,6 +84,7 @@ export default function ItemList({
                 onClick={() => setOpenMenuId(isOpen ? null : item.id)}
                 className="rounded-xl px-3 py-2 text-lg text-gray-400 transition hover:bg-gray-100 active:scale-95 active:bg-gray-200"
                 aria-label="아이템 메뉴 열기"
+                disabled={isDeleting}
               >
                 ⋯
               </button>
@@ -87,10 +94,10 @@ export default function ItemList({
               ref={(el) => {
                 menuRefs.current[item.id] = el
               }}
-              className={`absolute right-4 top-12 z-10 w-24 overflow-hidden rounded-xl border border-gray-100 bg-white shadow-md transition-all duration-250 ease-out ${
+              className={`absolute right-4 top-12 z-10 w-24 overflow-hidden rounded-xl border border-gray-100 bg-white shadow-md transition-all duration-200 ${
                 isOpen
                   ? "pointer-events-auto translate-y-0 scale-100 opacity-100"
-                  : "pointer-events-none translate-y-2 scale-90 opacity-0"
+                  : "pointer-events-none translate-y-1 scale-95 opacity-0"
               }`}
             >
               <button
@@ -98,17 +105,17 @@ export default function ItemList({
                   onEdit(item)
                   setOpenMenuId(null)
                 }}
-                className="w-full px-3 py-2.5 text-center text-sm transition-colors hover:bg-gray-50 active:bg-gray-100"
+                className="w-full px-3 py-2.5 text-center text-sm hover:bg-gray-50 active:bg-gray-100"
               >
                 수정
               </button>
 
               <button
                 onClick={() => {
-                  onDelete(item.id)
+                  onDelete(item)
                   setOpenMenuId(null)
                 }}
-                className="w-full px-3 py-2.5 text-center text-sm text-red-500 transition-colors hover:bg-gray-50 active:bg-red-50"
+                className="w-full px-3 py-2.5 text-center text-sm text-red-500 hover:bg-gray-50 active:bg-red-50"
               >
                 삭제
               </button>
