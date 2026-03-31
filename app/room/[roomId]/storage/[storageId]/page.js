@@ -2,10 +2,13 @@ import AppLayout from "@/components/AppLayout"
 import { ROOMS } from "@/data/rooms"
 import { STORAGES } from "@/data/storages"
 import { SPOTS } from "@/data/spots"
-import { ITEMS } from "@/data/items"
 import Card from "@/components/Card"
 import PageHeader from "@/components/PageHeader"
 import Link from "next/link"
+import { createServerSupabaseClient } from "@/lib/supabase/server"
+
+export const dynamic = "force-dynamic"
+export const revalidate = 0
 
 export default async function SpotPage({ params }) {
   const { roomId, storageId } = await params
@@ -30,6 +33,27 @@ export default async function SpotPage({ params }) {
     (spot) => spot.storageId === Number(storageId)
   )
 
+  const supabase = createServerSupabaseClient()
+  const spotIds = spots.map((spot) => spot.id)
+
+  let itemCountMap = {}
+
+  if (spotIds.length > 0) {
+    const { data, error } = await supabase
+      .from("items")
+      .select("id, spot_id")
+      .in("spot_id", spotIds)
+
+    if (error) {
+      console.error("Spot별 아이템 개수 조회 오류:", error)
+    } else {
+      itemCountMap = (data ?? []).reduce((acc, item) => {
+        acc[item.spot_id] = (acc[item.spot_id] ?? 0) + 1
+        return acc
+      }, {})
+    }
+  }
+
   return (
     <AppLayout>
       <PageHeader
@@ -40,9 +64,7 @@ export default async function SpotPage({ params }) {
 
       <section className="mt-6 space-y-3">
         {spots.map((spot) => {
-          const itemCount = ITEMS.filter(
-            (item) => item.spotId === spot.id
-          ).length
+          const itemCount = itemCountMap[spot.id] ?? 0
 
           return (
             <Link
